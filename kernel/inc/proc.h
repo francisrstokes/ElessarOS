@@ -12,5 +12,6 @@ typedef struct cpu_t {
 } cpu_t;
 
 cpu_t* this_cpu(void);
+u32 this_cpu_id(void);
 
 #endif // INC_PROC_H

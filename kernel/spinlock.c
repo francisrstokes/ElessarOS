@@ -2,7 +2,7 @@
 #include "inc/proc.h"
 #include "inc/interrupts.h"
 
-static void acquire_push_interrupt_state(void) {
+void acquire_push_interrupt_state(void) {
   u32 old_interrupt_state = interrupts_get();
   interrupts_off();
 
@@ -13,7 +13,7 @@ static void acquire_push_interrupt_state(void) {
   cpu->interrupt_disabled_count++;
 }
 
-static void release_pop_interrupt_state(void) {
+void release_pop_interrupt_state(void) {
   if (interrupts_get() != 0) {
     // panic, interrupts should be off
   }
