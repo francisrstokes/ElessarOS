@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "type": "gdb",
+      "request": "attach",
+      "name": "Attach to gdbserver",
+      "executable": "${workspaceRoot}/kernel/kernel",
+      "target": "127.0.0.1:26000",
+      "remote": true,
+      "cwd": "${workspaceRoot}",
+      "gdbpath": "gdb-multiarch",
+      "debugger_args": ["-ix", "${workspaceRoot}/.gdbinit"],
+      "autorun": [
+        "set architecture riscv:rv64",
+        "symbol-file kernel/kernel",
+        "set disassemble-next-line auto",
+        "set riscv use-compressed-breakpoints yes",
+      ],
+      "stopAtEntry": false,
+      "valuesFormatting": "prettyPrinters"
+    }
+  ]
+}

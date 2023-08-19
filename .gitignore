@@ -1,0 +1,7 @@
+*.o
+*.d
+*.asm
+*.sym
+.gdbinit
+
+kernel/kernel
