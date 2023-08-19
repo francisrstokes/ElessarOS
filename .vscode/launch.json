@@ -9,7 +9,6 @@
       "remote": true,
       "cwd": "${workspaceRoot}",
       "gdbpath": "gdb-multiarch",
-      "debugger_args": ["-ix", "${workspaceRoot}/.gdbinit"],
       "autorun": [
         "set architecture riscv:rv64",
         "symbol-file kernel/kernel",
