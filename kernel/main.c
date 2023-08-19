@@ -1,9 +1,8 @@
 #include "inc/types.h"
 #include "inc/proc.h"
 #include "inc/uart.h"
+#include "inc/printf.h"
 
-char* cpu0_message = "Hello from CPU #0!\n";
-char* cpuN_message = "Hello from CPU >0!\n";
 
 volatile u32 setup_complete = 0;
 
@@ -11,15 +10,16 @@ volatile u32 setup_complete = 0;
 void main(void) {
   if (this_cpu_id() == 0) {
     uart_init();
+    printf_init();
 
-    uart_write_str(cpu0_message);
+    printf("Hello from cpu #%d\n", this_cpu_id());
 
     setup_complete = 1;
   } else {
     while (setup_complete == 0) {
       // Spin until system init complete
     }
-    uart_write_str(cpuN_message);
+    printf("Hello from (non-zero) cpu #%d\n", this_cpu_id());
   }
 
   while (1) {}

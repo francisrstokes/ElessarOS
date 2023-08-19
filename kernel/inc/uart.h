@@ -31,6 +31,5 @@
 void uart_init(void);
 void uart_kwrite(i32 ch);
 void uart_write(i32 ch);
-void uart_write_str(char* str);
 
 #endif // INC_UART_H

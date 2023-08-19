@@ -41,20 +41,6 @@ void uart_write(i32 ch) {
   spinlock_release(&uart_tx_lock);
 }
 
-void uart_write_str(char* str) {
-  spinlock_acquire(&uart_tx_lock);
-
-  while (*str != 0) {
-    while((UART_REG(LSR) & LSR_TX_IDLE) == 0) {
-      // Wait until ready to transmit
-    }
-    UART_REG(THR) = (u32)(*str);
-    str++;
-  }
-
-  spinlock_release(&uart_tx_lock);
-}
-
 // Non-interrupt based, blocking version of uart_write that can be used by the kernel
 void uart_kwrite(i32 ch) {
   acquire_push_interrupt_state();
