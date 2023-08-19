@@ -2,7 +2,7 @@
 #include "inc/param.h"
 #include "inc/asm.h"
 
-__attribute__((aligned(16))) u8 stack0[NCPU * PAGE_SIZE] = {0};
+__attribute__((aligned(16))) u8 stack0[NCPU * PAGE_SIZE];
 
 void main(void);
 
@@ -36,8 +36,4 @@ void start(void) {
 
   // Transfer execution to S-Mode
   asm volatile("mret");
-}
-
-void main(void) {
-  while (1) {}
 }

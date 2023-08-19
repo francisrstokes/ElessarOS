@@ -5,7 +5,11 @@ U=user
 
 OBJS = \
   $K/entry.o \
-  $K/start.o
+  $K/start.o \
+  $K/main.o \
+  $K/proc.o \
+  $K/interrupts.o \
+  $K/spinlock.o
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin

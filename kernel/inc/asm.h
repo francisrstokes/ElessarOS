@@ -3,6 +3,7 @@
 
 #include "inc/types.h"
 
+// M-Mode
 #define MSTATUS_MPP_MASK (3L << 11)
 #define MSTATUS_MPP_S    (1L << 11)
 
@@ -46,6 +47,37 @@ static inline void w_medeleg(u64 x) {
   asm volatile("csrw medeleg, %0" : : "r"(x));
 }
 
+static inline u64 r_pmpcfg0(void) {
+  u64 x;
+  asm volatile("csrr %0, pmpcfg0" : "=r"(x));
+  return x;
+}
+
+static inline void w_pmpcfg0(u64 x) {
+  asm volatile("csrw pmpcfg0, %0" : : "r"(x));
+}
+
+static inline u64 r_pmpaddr0(void) {
+  u64 x;
+  asm volatile("csrr %0, pmpaddr0" : "=r"(x));
+  return x;
+}
+
+static inline void w_pmpaddr0(u64 x) {
+  asm volatile("csrw pmpaddr0, %0" : : "r"(x));
+}
+
+static inline u64 r_mhartid(void) {
+  u64 x;
+  asm volatile("csrr %0, mhartid" : "=r"(x));
+  return x;
+}
+
+static inline void w_mhartid(u64 x) {
+  asm volatile("csrw mhartid, %0" : : "r"(x));
+}
+
+// S-Mode
 static inline u64 r_satp(void) {
   u64 x;
   asm volatile("csrr %0, satp" : "=r"(x));
@@ -80,34 +112,16 @@ static inline void w_sip(u64 x) {
   asm volatile("csrw sip, %0" : : "r"(x));
 }
 
-static inline u64 r_pmpcfg0(void) {
+#define SSTATUS_SIE (1)
+
+static inline u64 r_sstatus(void) {
   u64 x;
-  asm volatile("csrr %0, pmpcfg0" : "=r"(x));
+  asm volatile("csrr %0, sstatus" : "=r"(x));
   return x;
 }
 
-static inline void w_pmpcfg0(u64 x) {
-  asm volatile("csrw pmpcfg0, %0" : : "r"(x));
-}
-
-static inline u64 r_pmpaddr0(void) {
-  u64 x;
-  asm volatile("csrr %0, pmpaddr0" : "=r"(x));
-  return x;
-}
-
-static inline void w_pmpaddr0(u64 x) {
-  asm volatile("csrw pmpaddr0, %0" : : "r"(x));
-}
-
-static inline u64 r_mhartid(void) {
-  u64 x;
-  asm volatile("csrr %0, mhartid" : "=r"(x));
-  return x;
-}
-
-static inline void w_mhartid(u64 x) {
-  asm volatile("csrw mhartid, %0" : : "r"(x));
+static inline void w_sstatus(u64 x) {
+  asm volatile("csrw sstatus, %0" : : "r"(x));
 }
 
 // General purpose registers

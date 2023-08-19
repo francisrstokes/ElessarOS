@@ -10,4 +10,6 @@ typedef short          i16;
 typedef int            i32;
 typedef long           i64;
 
+#define NULL  (0)
+
 #endif // INC_TYPES_H
