@@ -2,7 +2,7 @@
 #include "proc.h"
 #include "uart.h"
 #include "printf.h"
-
+#include "kmem.h"
 
 volatile u32 setup_complete = 0;
 
@@ -16,6 +16,7 @@ void main(void) {
 
     print_logo();
 
+    kmem_init();
 
     setup_complete = 1;
   } else {

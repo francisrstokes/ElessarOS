@@ -11,6 +11,8 @@ OBJS = \
   $K/interrupts.o \
   $K/spinlock.o \
   $K/uart.o \
+  $K/kmem.o \
+  $K/kstring.o \
   $K/printf.o
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
@@ -150,7 +152,8 @@ qemu: #$K/kernel fs.img
 .gdbinit: .gdbinit.tmpl-riscv
 	sed "s/:1234/:$(GDBPORT)/" < $^ > $@
 
-qemu-gdb: $K/kernel .gdbinit #fs.img
+# qemu-gdb: $K/kernel .gdbinit #fs.img
+qemu-gdb: .gdbinit #fs.img
 	@echo "*** Now run 'gdb' in another window." 1>&2
 	$(QEMU) $(QEMUOPTS) -S $(QEMUGDB)
 

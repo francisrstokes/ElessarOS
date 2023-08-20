@@ -2,12 +2,11 @@
 #define INC_UART_H
 
 #include "types.h"
+#include "memory-map.h"
 
-#define UART_BASE (volatile u8*)(0x10000000)
-#define UART_REG(reg) (*(UART_BASE + reg))
+#define UART_REG(reg) (*(volatile u8*)(UART_BASE + reg))
 
 #define UART_TX_BUF_SIZE  (32)
-
 
 // Mostly taken directly from xv6
 #define RHR 0                 // receive holding register (for input bytes)
