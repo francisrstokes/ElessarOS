@@ -1,7 +1,7 @@
 #ifndef INC_UART_H
 #define INC_UART_H
 
-#include "inc/types.h"
+#include "types.h"
 
 #define UART_BASE (volatile u8*)(0x10000000)
 #define UART_REG(reg) (*(UART_BASE + reg))

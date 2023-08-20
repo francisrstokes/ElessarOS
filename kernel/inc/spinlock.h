@@ -1,7 +1,7 @@
 #ifndef INC_SPINLOCK_H
 #define INC_SPINLOCK_H
 
-#include "inc/types.h"
+#include "types.h"
 
 typedef struct spinlock_t {
   u32 locked;

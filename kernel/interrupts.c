@@ -1,5 +1,5 @@
-#include "inc/interrupts.h"
-#include "inc/asm.h"
+#include "interrupts.h"
+#include "asm.h"
 
 u32 interrupts_get(void) {
   u64 sstatus = r_sstatus();

@@ -1,6 +1,6 @@
-#include "inc/uart.h"
-#include "inc/proc.h"
-#include "inc/spinlock.h"
+#include "uart.h"
+#include "proc.h"
+#include "spinlock.h"
 
 static spinlock_t uart_tx_lock;
 

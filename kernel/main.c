@@ -1,7 +1,7 @@
-#include "inc/types.h"
-#include "inc/proc.h"
-#include "inc/uart.h"
-#include "inc/printf.h"
+#include "types.h"
+#include "proc.h"
+#include "uart.h"
+#include "printf.h"
 
 
 volatile u32 setup_complete = 0;

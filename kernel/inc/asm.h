@@ -1,7 +1,7 @@
 #ifndef INC_ASM_H
 #define INC_ASM_H
 
-#include "inc/types.h"
+#include "types.h"
 
 // M-Mode
 #define MSTATUS_MPP_MASK (3L << 11)

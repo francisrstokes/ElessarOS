@@ -1,7 +1,7 @@
 #ifndef INC_PROC_H
 #define INC_PROC_H
 
-#include "inc/types.h"
+#include "types.h"
 
 typedef struct cpu_t {
   u32 old_interrupt_state;

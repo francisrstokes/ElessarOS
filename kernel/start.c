@@ -1,6 +1,6 @@
-#include "inc/types.h"
-#include "inc/param.h"
-#include "inc/asm.h"
+#include "types.h"
+#include "param.h"
+#include "asm.h"
 
 __attribute__((aligned(16))) u8 stack0[NCPU * PAGE_SIZE];
 

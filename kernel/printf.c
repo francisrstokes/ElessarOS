@@ -1,6 +1,6 @@
-#include "inc/printf.h"
-#include "inc/spinlock.h"
-#include "inc/uart.h"
+#include "printf.h"
+#include "spinlock.h"
+#include "uart.h"
 
 spinlock_t printf_lock;
 

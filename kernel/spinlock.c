@@ -1,6 +1,6 @@
-#include "inc/spinlock.h"
-#include "inc/proc.h"
-#include "inc/interrupts.h"
+#include "spinlock.h"
+#include "proc.h"
+#include "interrupts.h"
 
 void acquire_push_interrupt_state(void) {
   u32 old_interrupt_state = interrupts_get();

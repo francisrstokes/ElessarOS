@@ -1,6 +1,6 @@
-#include "inc/proc.h"
-#include "inc/asm.h"
-#include "inc/param.h"
+#include "proc.h"
+#include "asm.h"
+#include "param.h"
 
 static cpu_t cpus[NCPU];
 
