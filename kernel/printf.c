@@ -28,6 +28,17 @@ static void print_int(i32 value, i32 base, i32 sign) {
   }
 }
 
+void print_ptr(u64 ptr) {
+  uart_write((i32)'0');
+  uart_write((i32)'x');
+
+  u32 nibble;
+  for (int i = 0; i < (sizeof(u64) * 2); i++) {
+    nibble = (ptr >> (60 - i * 4)) & 0xf;
+    uart_write((i32)digits[nibble]);
+  }
+}
+
 void printf_init(void) {
   spinlock_init(&printf_lock, "printf");
 }
@@ -59,7 +70,11 @@ void printf(char *fmt, ...) {
       } break;
 
       case 'x': {
-        print_int(va_arg(ap, int), 16, 1);
+        print_int(va_arg(ap, int), 16, 0);
+      } break;
+
+      case 'p': {
+        print_ptr(va_arg(ap, u64));
       } break;
 
       case '%': {
