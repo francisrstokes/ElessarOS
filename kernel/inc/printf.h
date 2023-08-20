@@ -6,5 +6,6 @@
 
 void printf_init(void);
 void printf(char *fmt, ...);
+void panic(char* str);
 
 #endif // INC_PRINTF_H

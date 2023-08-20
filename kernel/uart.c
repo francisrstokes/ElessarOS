@@ -6,6 +6,8 @@ static spinlock_t uart_tx_lock;
 
 char uart_tx_buf[UART_TX_BUF_SIZE];
 
+extern int panicked;      // from printf.c
+
 void uart_init(void) {
   // disable interrupts.
   UART_REG(IER) = 0x00;
@@ -33,6 +35,12 @@ void uart_init(void) {
 void uart_write(i32 ch) {
   spinlock_acquire(&uart_tx_lock);
 
+  if (panicked) {
+    while (1) {
+      // spin forever
+    }
+  }
+
   while((UART_REG(LSR) & LSR_TX_IDLE) == 0) {
     // Wait until ready to transmit
   }
@@ -44,6 +52,12 @@ void uart_write(i32 ch) {
 // Non-interrupt based, blocking version of uart_write that can be used by the kernel
 void uart_kwrite(i32 ch) {
   acquire_push_interrupt_state();
+
+  if (panicked) {
+    while (1) {
+      // spin forever
+    }
+  }
 
   while((UART_REG(LSR) & LSR_TX_IDLE) == 0) {
     // Wait until ready to transmit

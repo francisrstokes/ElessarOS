@@ -2,7 +2,16 @@
 #include "spinlock.h"
 #include "uart.h"
 
-spinlock_t printf_lock;
+typedef struct printf_state_t {
+  spinlock_t lock;
+  u32 use_lock;
+} printf_state_t;
+
+static printf_state_t printf_state;
+
+// Global that can be referenced in other parts of the system. xv6 puts it here because panic sets it,
+// which makes some sense.
+volatile int panicked = 0;
 
 static const char* digits = "0123456789abcdef";
 
@@ -40,14 +49,17 @@ void print_ptr(u64 ptr) {
 }
 
 void printf_init(void) {
-  spinlock_init(&printf_lock, "printf");
+  spinlock_init(&printf_state.lock, "printf");
+  printf_state.use_lock = 1;
 }
 
 void printf(char *fmt, ...) {
   va_list ap;
   char c;
 
-  spinlock_acquire(&printf_lock);
+  if (printf_state.use_lock) {
+    spinlock_acquire(&printf_state.lock);
+  }
 
   va_start(ap, fmt);
   while (*fmt != 0) {
@@ -89,5 +101,19 @@ void printf(char *fmt, ...) {
   }
   va_end(ap);
 
-  spinlock_release(&printf_lock);
+  if (printf_state.use_lock) {
+    spinlock_release(&printf_state.lock);
+  }
+}
+
+void panic(char* str) {
+  printf_state.use_lock = 0;
+  printf("panic: ");
+  printf(str);
+  printf("\n");
+  panicked = 1;
+
+  while (1) {
+    // spin forever
+  }
 }

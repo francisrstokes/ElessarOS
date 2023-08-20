@@ -1,6 +1,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "interrupts.h"
+#include "printf.h"
 
 void acquire_push_interrupt_state(void) {
   u32 old_interrupt_state = interrupts_get();
@@ -15,14 +16,14 @@ void acquire_push_interrupt_state(void) {
 
 void release_pop_interrupt_state(void) {
   if (interrupts_get() != 0) {
-    // panic, interrupts should be off
+    panic("pop int");
   }
 
   cpu_t* cpu = this_cpu();
 
   cpu->interrupt_disabled_count--;
   if (cpu->interrupt_disabled_count < 0) {
-    // panic, more pops than pushes
+    panic("pop count");
   }
 
   if (cpu->interrupt_disabled_count == 0 && cpu->old_interrupt_state) {
@@ -38,9 +39,8 @@ void spinlock_init(spinlock_t* lk, char* name) {
 void spinlock_acquire(spinlock_t* lk) {
   acquire_push_interrupt_state();
 
-  // TODO: Verify that this CPU is not already holding the spinlock
   if (this_cpu() == lk->cpu) {
-    // panic
+    panic("acquire");
   }
 
   while (__sync_lock_test_and_set(&lk->locked, 1) != 0) {
@@ -55,7 +55,7 @@ void spinlock_acquire(spinlock_t* lk) {
 
 void spinlock_release(spinlock_t* lk) {
   if (this_cpu() != lk->cpu) {
-    // panic
+    panic("release");
   }
 
   lk->cpu = NULL;
