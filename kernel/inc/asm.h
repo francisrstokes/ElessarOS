@@ -124,6 +124,10 @@ static inline void w_sstatus(u64 x) {
   asm volatile("csrw sstatus, %0" : : "r"(x));
 }
 
+static inline void sfence_vma(void) {
+  asm volatile("sfence.vma zero, zero");
+}
+
 // General purpose registers
 static inline u64 r_tp(void) {
   u64 x;

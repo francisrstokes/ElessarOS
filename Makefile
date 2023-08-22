@@ -14,6 +14,7 @@ OBJS = \
   $K/kmem.o \
   $K/kstring.o \
   $K/trampoline.o \
+  $K/vm.o \
   $K/printf.o
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-

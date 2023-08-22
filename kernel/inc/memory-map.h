@@ -3,11 +3,13 @@
 
 #include "param.h"
 
-#define UART_BASE             (0x10000000)
+#define UART_BASE             (0x10000000L)
 
-#define RAM_BASE              (0x80000000)
-#define RAM_SIZE              (128 * 1024 * 1024) // 128MiB
-#define PHSYICAL_TOP          (RAM_BASE + RAM_SIZE)
+#define RAM_BASE              (0x80000000L)
+#define RAM_SIZE              (128L * 1024L * 1024L) // 128MiB
+#define PHYSICAL_TOP          (RAM_BASE + RAM_SIZE)
+
+#define KERNEL_BASE           (RAM_BASE)
 
 #define PAGE_ROUNDUP(addr)    (((addr) + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
 #define PAGE_ROUNDDOWN(addr)  ((addr) & ~(PAGE_SIZE - 1))

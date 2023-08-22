@@ -3,6 +3,7 @@
 #include "uart.h"
 #include "printf.h"
 #include "kmem.h"
+#include "vm.h"
 
 volatile u32 setup_complete = 0;
 
@@ -17,12 +18,17 @@ void main(void) {
     print_logo();
 
     kmem_init();
+    vm_init();
+    vm_hart_init();
+    printf("[vm] Page table setup complete\n");
 
     setup_complete = 1;
   } else {
     while (setup_complete == 0) {
       // Spin until system init complete
     }
+
+    vm_hart_init();
     printf("Hart #%d online\n", this_cpu_id());
   }
 

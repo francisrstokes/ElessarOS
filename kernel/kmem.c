@@ -21,12 +21,14 @@ void kmem_init(void) {
   kmem.free_list = NULL;
 
   // Add all of the memory after the kernel to the list of free pages
+  u32 page_count = 0;
   char* current_page = (char*)PAGE_ROUNDUP((u64)end);
-  while (current_page < (char*)PHSYICAL_TOP) {
-    printf("Initialising page: %p\n", current_page);
+  while (current_page < (char*)PHYSICAL_TOP) {
+    page_count++;
     kfree(current_page);
     current_page += PAGE_SIZE;
   }
+  printf("[kmem] Initialised %d physical pages for allocation\n", page_count);
 }
 
 void* kalloc(void) {
@@ -60,7 +62,7 @@ void kfree(void* pa) {
     panic("kfree low");
   }
 
-  if ((u64)pa > PHSYICAL_TOP) {
+  if ((u64)pa > PHYSICAL_TOP) {
     panic("kfree high");
   }
 
