@@ -6,6 +6,7 @@
 // M-Mode
 #define MSTATUS_MPP_MASK (3L << 11)
 #define MSTATUS_MPP_S    (1L << 11)
+#define MSTATUS_MIE      (1L << 3)
 
 static inline u64 r_mstatus(void) {
   u64 x;
@@ -15,6 +16,26 @@ static inline u64 r_mstatus(void) {
 
 static inline void w_mstatus(u64 x) {
   asm volatile("csrw mstatus, %0" : : "r"(x));
+}
+
+#define MIE_MTIE        (1L << 7)
+
+static inline u64 r_mie(void) {
+  u64 x;
+  asm volatile("csrr %0, mie" : "=r"(x));
+  return x;
+}
+
+static inline void w_mie(u64 x) {
+  asm volatile("csrw mie, %0" : : "r"(x));
+}
+
+static inline void w_mscratch(u64 x) {
+  asm volatile("csrw mscratch, %0" : : "r"(x));
+}
+
+static inline void w_mtvec(u64 x) {
+  asm volatile("csrw mtvec, %0" : : "r"(x));
 }
 
 static inline u64 r_mepc(void) {
@@ -102,6 +123,10 @@ static inline void w_sie(u64 x) {
   asm volatile("csrw sie, %0" : : "r"(x));
 }
 
+#define SIP_SEIP  (1L << 9)
+#define SIP_STIP  (1L << 5)
+#define SIP_SSIP  (1L << 1)
+
 static inline u64 r_sip(void) {
   u64 x;
   asm volatile("csrr %0, sip" : "=r"(x));
@@ -112,7 +137,7 @@ static inline void w_sip(u64 x) {
   asm volatile("csrw sip, %0" : : "r"(x));
 }
 
-#define SSTATUS_SIE (1)
+#define SSTATUS_SIE (1L << 1)
 
 static inline u64 r_sstatus(void) {
   u64 x;
@@ -122,6 +147,10 @@ static inline u64 r_sstatus(void) {
 
 static inline void w_sstatus(u64 x) {
   asm volatile("csrw sstatus, %0" : : "r"(x));
+}
+
+static inline void w_stvec(u64 x) {
+  asm volatile("csrw stvec, %0" : : "r"(x));
 }
 
 static inline void sfence_vma(void) {

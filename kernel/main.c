@@ -4,10 +4,17 @@
 #include "printf.h"
 #include "kmem.h"
 #include "vm.h"
+#include "asm.h"
 
 volatile u32 setup_complete = 0;
 
 void print_logo(void);
+void kernel_vec(void);
+
+void temp_vec(void) {
+  printf("[timer] %d\n", this_cpu_id());
+  w_sip(r_sip() & ~(SIP_SSIP));
+}
 
 // This is the first function executed in S-Mode.
 void main(void) {
@@ -32,7 +39,12 @@ void main(void) {
     printf("Hart #%d online\n", this_cpu_id());
   }
 
-  while (1) {}
+  w_stvec((u64)kernel_vec);
+  w_sstatus(r_sstatus() | SSTATUS_SIE);
+
+  while(1) {
+
+  }
 }
 
 void print_logo(void) {
